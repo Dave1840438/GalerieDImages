@@ -19,18 +19,19 @@ if (isset($_POST["username"]) && isset($_POST["password"]))
 
     if ($usager !== false)
     {
+        $_SESSION["SESSION_TIMEOUT"] = 60 * 10; // trente minutes
+        $_SESSION["LAST_ACTIVITY"] = time(); //maintenant
         $_SESSION["userID"] = $usager[0][0];
         $_SESSION["username"] = $usager[0][1];
         $_SESSION["isAdmin"] = (bool)($usager[0][3] == 1);
+
+        $DAL->insertConnectionLog($usager[0][0], $_SERVER['REMOTE_ADDR']);
 
         header('Location: ./');
     }
     else
         $message = "Nom d'usager ou mot de passe invalide";
 }
-
-
-$DAL = new BDOperations();
 
 ?>
 

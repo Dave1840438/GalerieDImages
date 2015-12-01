@@ -20,7 +20,7 @@ $tousLesCommentaires = $DAL->selectAllCommentsForPicture($_POST["IdImage"]);
 
 if (isset($_POST["deleteImage"]))
 {
-    if ($_SESSION["userID"] == $uneImage[0][2])
+    if ($_SESSION["userID"] == $uneImage[0][2] || $_SESSION["isAdmin"])
     {
         unlink('./' . $uneImage[0][1]);
         $DAL->supprimerPhoto($uneImage[0][0]);
@@ -42,7 +42,7 @@ echo '<br>';
 
 
 
-if ($_SESSION["userID"] == $uneImage[0][2])
+if ($_SESSION["userID"] == $uneImage[0][2] || $_SESSION["isAdmin"])
 {?>
     <form method="post" action="gestimage.php">
         <input type="hidden" name="IdImage" value="<?= $_POST['IdImage']?>">
@@ -63,12 +63,12 @@ for ($i = 0; $i < count($tousLesCommentaires); $i++)
 <form action="gestimage.php" method="post">
     <fieldset>
         <legend>Ajouter un commentaire</legend>
-        Commentaire: <input name="comment" type="text" size="100"><br>
+        Commentaire: <input name="comment" type="text" size="150"><br>
         <input type="submit" name="submitComment" value="Publier!">
         <input type="hidden" name="IdImage" value="<?= $_POST['IdImage']?>">
     </fieldset>
 </form>
 
-<
+
 
 

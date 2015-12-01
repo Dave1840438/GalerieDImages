@@ -17,8 +17,32 @@ class BDOperations
             $sqlInsert->bindParam(1, $username, PDO::PARAM_STR);
             $sqlInsert->bindParam(2, $password, PDO::PARAM_STR);
 
-            $result = $sqlInsert->execute();
+            try
+            {
+                $result = $sqlInsert->execute();
+            }
+            catch(Exception $e)
+            {
+                $result = false;
+            }
             $sqlInsert->closeCursor();
+            return $result;
+        }
+        else
+        {
+            die("Erreur d'acc�s � la bd!");
+        }
+    }
+
+    function updateUserPassword($idUser, $password)
+    {
+        if ($sqlUpdate = $this->bdd->prepare("UPDATE USERS SET PASSWORD = ? WHERE ID = ?"))
+        {
+            $sqlUpdate->bindParam(1, $password, PDO::PARAM_STR);
+            $sqlUpdate->bindParam(2, $idUser, PDO::PARAM_INT);
+
+            $result = $sqlUpdate->execute();
+            $sqlUpdate->closeCursor();
             return $result;
         }
         else
@@ -87,7 +111,7 @@ class BDOperations
 
     function selectAllImages()
     {
-        if ($sqlSelect = $this->bdd->prepare("SELECT * FROM PICTURES ORDER BY ID DESC"))
+        if ($sqlSelect = $this->bdd->prepare("SELECT P.ID, P.TITRE, U.USERNAME, P.GUID, P.DATEPUBLICATION, COUNT(C.ID) FROM PICTURES P LEFT JOIN USERS U ON U.ID = P.IDOWNER LEFT JOIN COMMENTS C ON C.IDAUTHOR = P.IDOWNER GROUP BY P.ID, P.TITRE, U.USERNAME, P.GUID, P.DATEPUBLICATION ORDER BY P.ID DESC"))
         {
             $sqlSelect->execute();
             $toutesLesImages = $sqlSelect->fetchAll();
@@ -144,12 +168,13 @@ class BDOperations
         }
     }
 
-    function ajouterPhoto($nomFichier, $ownerId)
+    function ajouterPhoto($nomFichier, $ownerId, $titre)
     {
-        if ($sqlInsert = $this->bdd->prepare("INSERT INTO PICTURES (GUID, IDOWNER) VALUES(?, ?)"))
+        if ($sqlInsert = $this->bdd->prepare("INSERT INTO PICTURES (GUID, IDOWNER, TITRE) VALUES(?, ?, ?)"))
         {
             $sqlInsert->bindParam(1, $nomFichier, PDO::PARAM_STR);
             $sqlInsert->bindParam(2, $ownerId, PDO::PARAM_STR);
+            $sqlInsert->bindParam(3, $titre, PDO::PARAM_STR);
 
             $result = $sqlInsert->execute();
             $sqlInsert->closeCursor();
@@ -227,6 +252,39 @@ class BDOperations
             $sqlSelect->closeCursor();
 
             return $tousLesCommentaires;
+        }
+        else
+        {
+            die("Erreur d'acc�s � la bd!");
+        }
+    }
+
+    function insertConnectionLog($userId, $ipAddress)
+    {
+        if ($sqlInsert = $this->bdd->prepare("INSERT INTO JOURNALCONNEXIONS (IDUSER, IPADDRESS) VALUES(?, ?)"))
+        {
+            $sqlInsert->bindParam(1, $userId, PDO::PARAM_INT);
+            $sqlInsert->bindParam(2, $ipAddress, PDO::PARAM_STR);
+
+            $result = $sqlInsert->execute();
+            $sqlInsert->closeCursor();
+            return $result;
+        }
+        else
+        {
+            die("Erreur d'acc�s � la bd!");
+        }
+    }
+
+    function getConnectionLog()
+    {
+        if ($sqlSelect = $this->bdd->prepare("SELECT J.CONNECTIONTIME, U.USERNAME, J.IPADDRESS FROM JOURNALCONNEXIONS J INNER JOIN USERS U ON U.ID = J.IDUSER ORDER BY J.ID DESC LIMIT 10"))
+        {
+            $sqlSelect->execute();
+            $connectionLog = $sqlSelect->fetchAll();
+            $sqlSelect->closeCursor();
+
+            return $connectionLog;
         }
         else
         {
