@@ -1,7 +1,17 @@
+<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
 
+<style>
+    .Images
+    {
+        max-height: 500px;
+        max-width: 500px;
+    }
+
+</style>
 
 <?php
-
 include_once("protectedPage.php");
 include_once("BaseDeDonne.php");
 include_once("OperationsBD.php");
@@ -13,8 +23,6 @@ if (isset($_POST["submitComment"]))
 {
     $DAL->insertComment($_POST["comment"], $_POST["IdImage"], $_SESSION["userID"]);
 }
-
-
 $uneImage = $DAL->selectionnerPhoto($_POST['IdImage']);
 $tousLesCommentaires = $DAL->selectAllCommentsForPicture($_POST["IdImage"]);
 
@@ -32,42 +40,123 @@ if ($uneImage == false)
 {
     die("L'image n'existe pas");
 }
-
-echo "<h1>L'image vue de plus proche</h1>";
-echo '<a href="index.php">Retour</a><br>';
-
-echo '<img src="' . $uneImage[0][1] . '" style="max-width:800px;max-height:600px">';
-
-echo '<br>';
-
-
-
-if ($_SESSION["userID"] == $uneImage[0][2] || $_SESSION["isAdmin"])
-{?>
-    <form method="post" action="gestimage.php">
-        <input type="hidden" name="IdImage" value="<?= $_POST['IdImage']?>">
-        <input type="submit" name="deleteImage" value="Supprimer">
-    </form>
-
-<?php }
-
-for ($i = 0; $i < count($tousLesCommentaires); $i++)
-{
-    echo 'Pseudonyme: ' . $tousLesCommentaires[$i][0] . '<br>';
-    echo 'Commentaire: ' . $tousLesCommentaires[$i][1] . '<br>';
-    echo 'Date de publication: ' . $tousLesCommentaires[$i][2] . '<br>';
-}
 ?>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.php">Home</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <?php
+                    echo '<a href="profil.php">Profil</a>';
+                    ?>
+                </li>
+                <?php
+                if ($_SESSION["isAdmin"])
+                {
+
+                    echo '<li><a href="listerUsagers.php">Supprimer des usagers</a></li>';
+                }
+                ?>
+                <li>
+                    <?php
+                    echo '<a href="Deconnection.php">Deconnection</a>';
+                    ?>
+                </li>
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="container" style="margin-top: 70px">
+    <div class="row">
+
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="panel panel-default" style="border-radius: 0px">
+                <div class="panel-heading">
+                    <h4 class="text-center">
+
+                    </h4>
+                </div>
+                <div class="panel-body text-center" style="padding: 0px">
+                    <?php
+                    echo '<img src="' . $uneImage[0][1] . '" style="max-width:500px;max-height:500px">';
+                    ?>
+                    <?php
+
+                    if ($_SESSION["userID"] == $uneImage[0][2] || $_SESSION["isAdmin"]) {
+                        ?>
+
+                        <form method="post" action="gestimage.php">
+                            <input type="hidden" name="IdImage" value="<?= $_POST['IdImage'] ?>">
+                            <input type="submit" name="deleteImage" class="btn btn-info" value="Supprimer">
+                        </form>
+                    <?php
+                    }
+                    ?>
+                </div>
+
+                <div class="message-wrap col-lg-12" style="background-color: #EFEFEF;">
+                    <div class="msg-wrap">
+                        <hr>
+                        <?php
+
+                        for ($i = 0; $i < count($tousLesCommentaires); $i++) {
+                            ?>
+
+                            <div class="media msg " style="margin: 10px;background-color:#cccccc; padding: 10px">
+                                <div class="media-body">
+                                    <small class="pull-right time">
+                                        <i class="fa fa-calendar"></i> <?php
+                                       echo '<h7>'.$tousLesCommentaires[$i][2].'</h7>';
+                                        ?><br>
+                                    </small>
+                                    <h5 class="media-heading">
+                                        <?php
+                                       echo '<h4>'.$tousLesCommentaires[$i][0]. '</h4>';
+                                        ?>
+
+                                    </h5>
+                                    <small class="col-lg-10">
+                                        <?php
+                                       echo  '<h6>'.$tousLesCommentaires[$i][1]. '</h6>';
+                                        ?>
+                                    </small>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <form action="gestimage.php" method="post">
+                    <div class="send-wrap ">
+                        <textarea class="form-control send-message" name="comment" rows="3" size="150" placeholder="Write a reply..."></textarea>
+                    </div>
+                    <div class="btn-panel">
+                        <input type="submit" class="btn btn-info" style="margin-top:10px " name="submitComment" value="Publier!">
+                        <input type="hidden" name="IdImage" value="<?= $_POST['IdImage']?>">
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <?php
+            echo '<a href="index.php" class="btn btn-info">Retour</a><br>';
+            ?>
+        </div>
+    </div>
+</div>
 
 
-<form action="gestimage.php" method="post">
-    <fieldset>
-        <legend>Ajouter un commentaire</legend>
-        Commentaire: <input name="comment" type="text" size="150"><br>
-        <input type="submit" name="submitComment" value="Publier!">
-        <input type="hidden" name="IdImage" value="<?= $_POST['IdImage']?>">
-    </fieldset>
-</form>
 
 
 

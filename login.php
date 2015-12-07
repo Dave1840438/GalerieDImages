@@ -34,9 +34,8 @@ if (isset($_POST["username"]) && isset($_POST["password"]))
 }
 
 ?>
-
-Voici la page de login
-
+<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<script src="js/bootstrap.min.js"></script>
 <style>
     b{
         color:red;
@@ -44,12 +43,29 @@ Voici la page de login
 </style>
 
 <form action="login.php" method="post">
-    <fieldset>
-        <legend>Vos informations</legend>
-        Nom d'utilisateur: <input name="username" value="<?= $username ?>" type="text" size="15"><br>
-        Mot de passe: <input name="password" type="password" size="30"><br>
-        <input type="submit" value="Se connecter!">
-    </fieldset>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4 col-lg-offset-4" style="margin-top: 50px">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="text-center">
+                            LogIn
+                        </h4>
+                    </div>
+                    <div class="panel-body text-center" style="padding: 20px">
+
+                        Nom d'utilisateur: <input name="username" class="form-control" value="<?= $username ?>" type="text" size="15"><br>
+                        Mot de passe: <input name="password" class="form-control" type="password" size="30"><br>
+                        <input type="submit" class="btn btn-info" value="Se connecter!">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </form>
 
 <b><?= $message ?></b>
