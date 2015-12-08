@@ -35,6 +35,8 @@ if (isset($_POST["username"]) && isset($_POST["password"]))
 
 ?>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <style>
     b{
