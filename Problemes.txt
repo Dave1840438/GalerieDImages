@@ -1,0 +1,18 @@
+login.php: 
+Le message d'erreur n'est pas centré
+
+index.php:
+L'image est trop large (doit être de max 150 de hauteur et 200 de largeur (en pixels))
+Le message d'erreur n'est pas bien placé
+
+gestimage.php:
+L'image doit pouvoir s'afficher jusqu'à 800x600px.
+Est-ce qu'on laisse qu'on peut commenter du vide?
+Identifier la section commentaires?
+
+
+Bas de page manquant (reminder)
+Le header et le footer doivent être dans des fichiers à part
+
+
+

@@ -66,7 +66,7 @@ for ($i = 0; $i < count($tousLesUsagers); $i++)
         ?>
 
         <td>
-        <form action="listerUsagers.php" method="post">
+        <form action="gestionUsagers.php" method="post">
             <input type="hidden" name="idToDelete" value="<?= $tousLesUsagers[$i][0] ?>">
             <input type="submit" value="Supprimer">
         </form>
@@ -104,7 +104,7 @@ echo '</table>';
 
 Voici la page d'inscription
 
-<form action="listerUsagers.php" method="post">
+<form action="gestionUsagers.php" method="post">
     <fieldset>
         <legend>Vos informations</legend>
         Nom d'utilisateur: <input name="username" value="<?= $username ?>" type="text" size="15"><br>

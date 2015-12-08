@@ -65,7 +65,7 @@ if ($uneImage == false)
                 if ($_SESSION["isAdmin"])
                 {
 
-                    echo '<li><a href="listerUsagers.php">Supprimer des usagers</a></li>';
+                    echo '<li><a href="gestionUsagers.php">Gestion des usagers</a></li>';
                 }
                 ?>
                 <li>
