@@ -1,7 +1,7 @@
 <?php
-$server = "mysql:host=127.0.0.1; dbname=GalerieImagesBD; charset=utf8";
-$usager = "root";
-$pass ="";
+$server = "mysql:host=localhost; dbname=db_davedom; charset=utf8";
+$usager = "davedom ";
+$pass ="88ch,,Vm";
 
 $bdd = new PDO($server, $usager, $pass,array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
