@@ -62,6 +62,7 @@ if (isset($_POST["username"]) && isset($_POST["password"]))
                         <input type="submit" class="btn btn-info" value="Se connecter!">
                     </div>
                 </div>
+                <b><?= $message ?></b>
             </div>
         </div>
     </div>
@@ -70,6 +71,7 @@ if (isset($_POST["username"]) && isset($_POST["password"]))
 
 </form>
 
-<b><?= $message ?></b>
+<?php include 'footer.php' ?>
+
 
 

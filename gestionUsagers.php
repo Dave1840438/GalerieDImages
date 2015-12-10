@@ -9,6 +9,9 @@ include_once("protectedPage.php");
 include_once("BaseDeDonne.php");
 include_once("OperationsBD.php");
 
+
+$messageErreur = "";
+
 if (!$_SESSION["isAdmin"])
     header('Location: ./');
 
@@ -27,11 +30,11 @@ if (isset($_POST["username"]))
 
     if ($username == '' /* ou qu'il exsite d�ja'*/)
     {
-        $messageErreur = "Le nom d'utilisateur doit �tre unique et non vide!";
+        $messageErreur = "Le nom d'utilisateur doit etre unique et non vide!";
     }
     else if ($password == '')
     {
-        $messageErreur = "Le mot de passe ne peut pas �tre vide!";
+        $messageErreur = "Le mot de passe ne peut pas etre vide!";
     }
     else if ($password != $_POST["confirmpassword"])
     {
@@ -41,7 +44,7 @@ if (isset($_POST["username"]))
     {
         if (!$DAL->inscrireUsager($username, $password))
         {
-            $messageErreur = "Le nom d'usager doit �tre unique!";
+            $messageErreur = "Le nom d'usager doit etre unique!";
         }
     }
 }
@@ -53,46 +56,10 @@ $connectionLog = $DAL->getConnectionLog();
 $username = "";
 $password = "";
 
-$messageErreur = "";
+
 ?>
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Home</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <?php
-                    echo '<a href="profil.php">Profil</a>';
-                    ?>
-                </li>
-                <?php
-                if ($_SESSION["isAdmin"])
-                {
-                    echo '<li class="active"><a href="gestionUsagers.php">Gestion des usagers</a></li>';
-                }
-                ?>
-                <li>
-                    <?php
-                    echo '<a href="Deconnection.php">Deconnection</a>';
-                    ?>
-                </li>
-
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+<?php include 'Header.php' ?>
 
 
 
@@ -183,10 +150,11 @@ Voici la page d'inscription
                 <input type="submit" class="btn btn-info" value="S'inscrire!">
             </div>
         </div>
+        <b><?=$messageErreur?></b>
     </div>
     </form>
 
-    <b><?=$messageErreur?></b>
+
     <br>
 </div>
 </div>
