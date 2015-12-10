@@ -158,6 +158,6 @@ if ($uneImage == false)
 
 
 
-
+<?php include 'footer.php' ?>
 
 

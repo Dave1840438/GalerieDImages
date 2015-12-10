@@ -140,4 +140,4 @@ if (isset($_POST["changeConnectionTimeout"]))
 
 
 
-
+<?php include 'footer.php' ?>

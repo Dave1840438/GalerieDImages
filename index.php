@@ -142,3 +142,5 @@ for ($i = 0; $i < count($touteLesImages); $i++)
 </div>
 <br>
 <b style="color:red;"><?=$message?></b>
+
+<?php include 'footer.php' ?>
