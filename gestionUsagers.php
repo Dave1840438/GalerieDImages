@@ -56,10 +56,10 @@ $connectionLog = $DAL->getConnectionLog();
 $username = "";
 $password = "";
 
-
 ?>
 
 <?php include 'Header.php' ?>
+
 
 
 
