@@ -27,7 +27,7 @@ if (isset($_POST["updatePassword"]))
     {
         if($DAL->updateUserPassword($_SESSION["userID"], $_POST["password"]))
         {
-            $message = "Le mot de passe a bien été changé!";
+            $message = "Le mot de passe a bien ete change!";
         }
         else
         {
@@ -76,7 +76,7 @@ if (isset($_POST["changeConnectionTimeout"]))
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="text-center">
-                            Profile
+                            Profil
                         </h4>
                     </div>
                     <div class="panel-body text-center" style="padding: 20px">
@@ -89,7 +89,7 @@ if (isset($_POST["changeConnectionTimeout"]))
                         <form action="profil.php" method="post">
                             <fieldset>
 
-                                Rester LogIn: <input type="checkbox" name="stayConnected">
+                                Rester connecte: <input type="checkbox" name="stayConnected">
                                 <input type="submit" name="changeConnectionTimeout" class="btn btn-info" value="Sauvegarder"!">
                             </fieldset>
                         </form>
